@@ -1,7 +1,23 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+// import { defineConfig } from 'vite'
+// import vue from '@vitejs/plugin-vue'
 
-// https://vite.dev/config/
+// // https://vite.dev/config/
+// export default defineConfig({
+//   plugins: [vue()],
+// })
+
+import path from "node:path";
+import tailwindcss from "@tailwindcss/vite";
+import vue from "@vitejs/plugin-vue";
+import { defineConfig } from "vite";
+
+import vueDevTools from "vite-plugin-vue-devtools";
+
 export default defineConfig({
-  plugins: [vue()],
-})
+  plugins: [vue(), tailwindcss(), vueDevTools()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+});
