@@ -2,7 +2,7 @@
   <img
     ref="imageParticleRef"
     :src="imageSrc"
-    :class="cn('hidden w-32 h-32', $props.class)"
+    :class="cn('hidden w-32 h-32 rounded-3xl', $props.class)"
     :data-particle-gap="particleGap"
     :data-width="canvasWidth"
     :data-height="canvasHeight"
@@ -41,9 +41,23 @@ type ParticleImageProps = {
   renderer?: "default" | "webgl";
   color?: string;
   colorArr?: number[];
-  initPosition?: "random" | "top" | "left" | "bottom" | "right" | "misplaced" | "none";
+  initPosition?:
+    | "random"
+    | "top"
+    | "left"
+    | "bottom"
+    | "right"
+    | "misplaced"
+    | "none";
   initDirection?: "random" | "top" | "left" | "bottom" | "right" | "none";
-  fadePosition?: "explode" | "top" | "left" | "bottom" | "right" | "random" | "none";
+  fadePosition?:
+    | "explode"
+    | "top"
+    | "left"
+    | "bottom"
+    | "right"
+    | "random"
+    | "none";
   fadeDirection?: "random" | "top" | "left" | "bottom" | "right" | "none";
   noise?: number;
   responsiveWidth?: boolean;
