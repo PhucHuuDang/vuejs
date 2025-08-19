@@ -13,21 +13,21 @@ import { GlowBorder } from "../ui/glow-border";
 import { CardSpotlight } from "../ui/card-spotlight";
 
 interface SheetContentProps {
-  class?: string;
-
   icon?: LucideIcon;
   title?: string;
 }
 
 const props = defineProps<{
   options: SheetContentProps[];
+
+  class?: string;
 }>();
 
 const isOpen = ref(false);
 </script>
 
 <template>
-  <Sheet :open="isOpen" v-on:update:open="isOpen = $event">
+  <Sheet :open="isOpen" @update:open="isOpen = $event">
     <SheetTrigger>
       <EllipsisIcon class="h-6 w-6 cursor-pointer" />
     </SheetTrigger>
