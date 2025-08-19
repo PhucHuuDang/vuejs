@@ -2,7 +2,7 @@
   <img
     ref="imageParticleRef"
     :src="imageSrc"
-    :class="cn('hidden w-32 h-32 rounded-3xl', $props.class)"
+    :class="cn('hidden w-32 h-32', $props.class)"
     :data-particle-gap="particleGap"
     :data-width="canvasWidth"
     :data-height="canvasHeight"

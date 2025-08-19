@@ -38,7 +38,7 @@ const props = withDefaults(
     gradientSize: 200,
     gradientColor: "#262626",
     gradientOpacity: 0.8,
-  }
+  },
 );
 
 const mouseX = ref(-props.gradientSize * 10);

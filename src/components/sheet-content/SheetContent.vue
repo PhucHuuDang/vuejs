@@ -29,21 +29,21 @@ const isOpen = ref(false);
 <template>
   <Sheet :open="isOpen" v-on:update:open="isOpen = $event">
     <SheetTrigger>
-      <EllipsisIcon class="w-6 h-6 cursor-pointer" />
+      <EllipsisIcon class="h-6 w-6 cursor-pointer" />
     </SheetTrigger>
     <SheetContent
-      class="w-full sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl mr-2 rounded-3xl overflow-hidden border-0 outline-none"
+      class="z-[999999] mr-2 w-full overflow-hidden rounded-3xl border-0 outline-none sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl"
     >
       <GlowBorder
         :color="['#A07CFE', '#FE8FB5', '#FFBE7B']"
         :border-radius="20"
       />
       <div
-        class="relative flex items-center justify-center size-full p-[4px] pt-[8px] rounded-3xl"
+        class="relative flex size-full items-center justify-center rounded-3xl p-[4px] pt-[8px]"
       >
         <CardSpotlight
           :gradient-color="'#363636'"
-          class="cursor-pointer border-0 outline-none bg-inherit absolute inset-0"
+          class="absolute inset-0 cursor-pointer border-0 bg-inherit outline-none"
         >
           <!-- <GlowBorder
             :color="['#A07CFE', '#FE8FB5', '#FFBE7B']"
@@ -61,7 +61,7 @@ const isOpen = ref(false);
               :key="index"
               class="flex items-center gap-2"
             >
-              <component v-if="option.icon" :is="option.icon" class="w-6 h-6" />
+              <component v-if="option.icon" :is="option.icon" class="h-6 w-6" />
               <h2 class="text-lg font-semibold">{{ option.title }}</h2>
             </div>
           </SheetHeader>

@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { useColorMode } from "@vueuse/core";
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { FluidCursor } from "./ui/fluid-cursor";
 import { Sparkles } from "./ui/sparkles";
 import { Navbar } from "./navbar";
 import { ParticleImage } from "./ui/particle-image";
+import TextGlitch from "./ui/text-glitch/TextGlitch.vue";
+import { RainbowButton } from "./ui/rainbow-button";
+import { Introduce } from "./introduce";
+import { Skills } from "./skills";
 
 const paticlesColor = computed<string>(() => {
   return useColorMode().value === "dark" ? "#FFFFFF" : "#000000";
@@ -12,13 +16,27 @@ const paticlesColor = computed<string>(() => {
 
 const bgColor = "#141414";
 defineProps<{ msg: string }>();
+
+const canvasHeight = ref(500);
+
+onMounted(() => {
+  if (window.innerHeight < 768) {
+    canvasHeight.value = 600;
+  } else if (window.innerHeight < 640) {
+    canvasHeight.value = 400;
+  } else {
+    canvasHeight.value = 900;
+  }
+});
 </script>
 
 <template>
-  <div class="relative flex flex-col items-center justify-center h-screen">
+  <div
+    class="relative flex h-screen flex-col items-center justify-center overflow-auto"
+  >
     <Navbar />
 
-    <div class="absolute top-0 left-0 w-full h-full z-0 inset-0">
+    <div class="absolute inset-0 top-0 left-0 z-0 h-full w-full">
       <Sparkles
         :background="bgColor"
         :min-size="1"
@@ -30,20 +48,8 @@ defineProps<{ msg: string }>();
       />
     </div>
 
-    <div
-      class="z-50 flex items-center justify-center size-40 sm:size-56 md:size-72 lg:size-96 xl:size-[500px] bg-green-50"
-    >
-      <ParticleImage
-        image-src="/avatar.png"
-        class="rounded-full object-cover w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-56 lg:h-56 xl:w-64 xl:h-64"
-        :responsive-width="true"
-      />
-    </div>
-
-    <h1 class="text-4xl font-bold z-10">
-      Hello, I'm <span class="text-primary">Harry</span>
-    </h1>
-
-    <FluidCursor />
+    <Introduce />
   </div>
+  <Skills />
+  <FluidCursor />
 </template>
