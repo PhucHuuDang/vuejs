@@ -1,15 +1,33 @@
 <template>
   <div :class="cn('relative block', props.class)">
-    <div :class="cn(
-  'relative grid w-full max-w-full items-center justify-center',
-  props.cards.length < 4 ? `grid-cols-${props.cards.length}` : 'grid-cols-4',
-)" :style="{
-  transform: `perspective(${props.perspective}px) rotateX(${props.rotateX}deg) rotateY(${props.rotateY}deg)`,
-}">
-      <div v-for="(item, index) in props.cards" :key="index" ref="card" class="card block rounded border border-transparent px-3 py-5 transition-all duration-200" :style="{
-  zIndex: index + 1,
-}">
-        <slot name="logo" :logo="item.logo" :index="index" />
+    <div
+      :class="
+        cn(
+          'relative grid w-full max-w-full items-center justify-center',
+          props.cards.length < 4
+            ? `grid-cols-${props.cards.length}`
+            : 'grid-cols-4',
+        )
+      "
+      :style="{
+        transform: `perspective(${props.perspective}px) rotateX(${props.rotateX}deg) rotateY(${props.rotateY}deg)`,
+      }"
+    >
+      <div
+        v-for="(item, index) in props.cards"
+        :key="index"
+        ref="card"
+        class="card block rounded-2xl border border-slate-400/5 px-3 py-5 transition-all duration-200"
+        :style="{
+          zIndex: index + 1,
+        }"
+      >
+        <slot
+          name="logo"
+          :logo="item.logo"
+          :index="index"
+          :item="{ ...item }"
+        />
       </div>
     </div>
   </div>
@@ -23,6 +41,10 @@ import { useMouseInElement, useDebounceFn } from "@vueuse/core";
 const card = ref<HTMLElement[]>();
 interface Cards {
   logo: string;
+  key: string;
+
+  title?: string;
+  description?: string;
 }
 interface Props {
   class?: string;
@@ -64,7 +86,10 @@ onMounted(() => {
     const { isOutside } = useMouseInElement(el);
     const adjacentCards = adjacentCardItems(i);
     // add class when mouse is inside the element
-    const removeClasses = useDebounceFn(() => removeCardClasses(el, adjacentCards), 200);
+    const removeClasses = useDebounceFn(
+      () => removeCardClasses(el, adjacentCards),
+      200,
+    );
     watch(isOutside, (isOutside) => {
       if (!isOutside) {
         el.classList.add("card-raised-big");
@@ -76,6 +101,17 @@ onMounted(() => {
       }
     });
   });
+
+  // custom animation for the first cartd
+  if (card.value?.[0]) {
+    const firstCard = card.value[5] || card.value[0];
+    const adjacents = adjacentCardItems(5) || adjacentCardItems(0);
+
+    firstCard.classList.add("card-raised-big");
+    adjacents.forEach((adj) => {
+      adj?.classList.add("card-raised-small");
+    });
+  }
 });
 </script>
 
@@ -100,7 +136,12 @@ onMounted(() => {
 }
 
 .dark .grid-transform:before {
-  background: radial-gradient(circle, #1f2937 0%, #020420 70%, transparent 100%);
+  background: radial-gradient(
+    circle,
+    #1f2937 0%,
+    #020420 70%,
+    transparent 100%
+  );
 }
 
 .card {
@@ -156,7 +197,7 @@ onMounted(() => {
 }
 
 .dark .card-raised-small {
-  border: 1px solid rgba(217, 251, 232, 0.2);
+  /* border: 1px solid rgba(217, 251, 232, 0.2); */
   transform: scale(1.05) translateX(-5px) translateY(-5px) translateZ(0);
 }
 

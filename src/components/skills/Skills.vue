@@ -1,6 +1,6 @@
 <template>
-  <CardSpotlight class="z-50 size-full rounded-xs border-0">
-    <div class="pt-10">
+  <CardSpotlight class="z-50 rounded-xs border-0" slot-class="w-full">
+    <div class="py-10">
       <div class="flex items-center justify-center">
         <RadiantText
           class="inline-flex items-center justify-center gap-1 transition ease-out hover:text-neutral-600 hover:duration-300"
@@ -10,27 +10,55 @@
         </RadiantText>
       </div>
 
-      <div
-        class="gird-cols-1 grid items-center justify-center gap-8 p-20 md:grid-cols-2"
-      >
-        <div class="flex items-center justify-center p-4">
+      <div class="grid grid-cols-1 gap-0 md:grid-cols-2">
+        <div class="flex w-full items-center justify-center p-4 pb-8">
           <AnimateGrid
             :cards="cards"
-            class="b rounded-3xl"
-            :perspective="100"
-            :rotate-x="10"
-            :rotate-y="10"
+            :perspective="250"
+            :rotate-x="5"
+            :rotate-y="15"
           >
-            <template #logo="{ logo }">
-              <img class="logo mx-auto h-10 w-auto" :src="logo" />
+            <template #logo="{ logo, item }">
+              <HoverCard :open-delay="200" class="h-full w-full">
+                <HoverCardTrigger as-child>
+                  <div
+                    @mouseenter="handleMouseEnter({ ...item })"
+                    @mouseleave="onMouseLeave"
+                  >
+                    <img class="logo h-16 w-auto" :src="logo" />
+                  </div>
+                </HoverCardTrigger>
+                <HoverCardContent side="right" align="center" :side-offset="8">
+                  <p>{{ item.title }}</p>
+                </HoverCardContent>
+              </HoverCard>
             </template>
           </AnimateGrid>
         </div>
 
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente quam
-          totam ex? Id aut suscipit voluptate neque tempora, sapiente commodi
-          totam harum natus labore, sequi maxime veritatis ducimus quibusdam et.
+        <div class="flex h-full w-full items-center justify-center">
+          <div
+            class="motion-preset-blur-right motion-preset-focus w-full text-lg font-semibold whitespace-normal"
+            v-if="hoveredCard"
+          >
+            <!-- <div class="min-w-20"> -->
+            <TextReveal
+              class="min-w-20 text-center font-mono text-3xl leading-relaxed font-light italic"
+            >
+              {{ hoveredCard?.description }}
+            </TextReveal>
+            <!-- </div> -->
+          </div>
+          <div
+            class="motion-preset-blur-right motion-preset-focus w-full text-lg font-semibold whitespace-normal"
+            v-if="!hoveredCard"
+          >
+            <TextReveal
+              class="min-w-20 text-center font-mono text-3xl leading-relaxed font-light italic"
+            >
+              Languages and frameworks I've worked with!
+            </TextReveal>
+          </div>
         </div>
       </div>
     </div>
@@ -42,9 +70,24 @@ import { CardSpotlight } from "@/components/ui/card-spotlight";
 import { RadiantText } from "../ui/radiant-text";
 import { CpuIcon } from "lucide-vue-next";
 import { AnimateGrid } from "../ui/animate-grid";
-import { CardBody, CardContainer, CardItem } from "../ui/card-3d";
+import { useMouseEnter, useMouseLeave } from "@/store/hover";
 
-const cards = Array.from({ length: 8 }, () => ({
-  logo: "/logo.png",
+import { TextReveal } from "../ui/text-reveal";
+import { techs } from "@/icon/icon";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../ui/hover-card";
+
+const cards = techs.map((tech, index) => ({
+  logo: tech?.logo ? tech.logo : "/logo.png",
+  key: `card-${index + 1}`,
+  title: tech.title,
+  description: tech.description,
 }));
+
+const { handleMouseEnter, hoveredCard } = useMouseEnter();
+
+const onMouseLeave = useMouseLeave();
 </script>
