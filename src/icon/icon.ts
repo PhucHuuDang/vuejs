@@ -14,6 +14,7 @@ import react from "./reactjs.png";
 import redux from "./redux.png";
 import express from "./express.png";
 import nuxt from "./nuxt.png";
+import angular from "./angular.png";
 
 export const techs = [
   {
@@ -54,6 +55,7 @@ export const techs = [
   },
   {
     title: "Angular",
+    logo: angular,
     description:
       "Angular is a TypeScript-based framework maintained by Google, designed for building large-scale, structured web applications.",
   },

@@ -14,7 +14,8 @@ const paticlesColor = computed<string>(() => {
   return useColorMode().value === "dark" ? "#FFFFFF" : "#000000";
 });
 
-const bgColor = "#141414";
+// const bgColor = "#141414";
+const bgColor = "radial-gradient(ellipse_at_bottom, #262626 0%, #000 100%)";
 defineProps<{ msg: string }>();
 
 const canvasHeight = ref(500);
@@ -41,8 +42,8 @@ onMounted(() => {
         :background="bgColor"
         :min-size="1"
         :max-size="2"
-        :particle-density="350"
-        class="size-full"
+        :particle-density="400"
+        class="size-full bg-[radial-gradient(ellipse_at_bottom,_#262626_0%,_#000_100%)]"
         :particle-color="paticlesColor"
         :speed="0.5"
       />

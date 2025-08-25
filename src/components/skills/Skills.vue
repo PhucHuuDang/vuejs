@@ -28,7 +28,12 @@
                     <img class="logo h-16 w-auto" :src="logo" />
                   </div>
                 </HoverCardTrigger>
-                <HoverCardContent side="right" align="center" :side-offset="8">
+                <HoverCardContent
+                  side="right"
+                  align="center"
+                  :side-offset="20"
+                  class="border-0 bg-transparent text-lg font-semibold text-slate-200 italic"
+                >
                   <p>{{ item.title }}</p>
                 </HoverCardContent>
               </HoverCard>
