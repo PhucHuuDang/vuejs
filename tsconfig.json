@@ -20,6 +20,14 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+
+    "useUnknownInCatchVariables": false
+
+    // "target": "ES2023",
+    // "lib": ["ES2023", "DOM"],
+
+    // "noUnusedLocals": false,
+    // "noUnusedParameters": false
   }
 }
